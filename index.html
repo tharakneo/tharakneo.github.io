@@ -63,29 +63,29 @@
 
 /* ===== BAT MODE — deep cinematic red/black like The Batman poster ===== */
 [data-theme="bat"] {
-  --bg: #080000;
-  --bg-secondary: #0c0101;
-  --text-primary: #cc2020;
-  --text-secondary: #8b1a1a;
-  --text-tertiary: #5a1111;
-  --accent: #e02020;
-  --accent-hover: #ff2a2a;
-  --glass-bg: rgba(20,2,2,0.8);
-  --glass-border: rgba(200,20,20,0.12);
-  --glass-shadow: 0 2px 30px rgba(255,0,0,0.06);
-  --glass-hover-bg: rgba(200,20,20,0.06);
-  --tag-bg: rgba(200,20,20,0.1);
-  --tag-text: #cc2020;
-  --divider: rgba(200,20,20,0.1);
-  --card-hover: rgba(200,20,20,0.03);
-  --nav-active: #e02020;
-  --nav-inactive: #5a1111;
-  --loader-bg: #080000;
-  --loader-text: #e02020;
-  --scrollbar: rgba(200,20,20,0.3);
-  --link-arrow: #e02020;
-  --selection-bg: rgba(200,20,20,0.2);
-  --selection-text: #ff2a2a;
+  --bg: #120303;
+  --bg-secondary: #180505;
+  --text-primary: #ff6f6f;
+  --text-secondary: #ff5555;
+  --text-tertiary: #d74444;
+  --accent: #ff4c4c;
+  --accent-hover: #ff8a8a;
+  --glass-bg: rgba(32,6,6,0.82);
+  --glass-border: rgba(255,70,70,0.24);
+  --glass-shadow: 0 2px 30px rgba(255,0,0,0.16);
+  --glass-hover-bg: rgba(255,70,70,0.1);
+  --tag-bg: rgba(255,70,70,0.18);
+  --tag-text: #ff6f6f;
+  --divider: rgba(255,70,70,0.16);
+  --card-hover: rgba(255,70,70,0.06);
+  --nav-active: #ff6f6f;
+  --nav-inactive: #c74a4a;
+  --loader-bg: #120303;
+  --loader-text: #ff6f6f;
+  --scrollbar: rgba(255,70,70,0.4);
+  --link-arrow: #ff6f6f;
+  --selection-bg: rgba(255,70,70,0.22);
+  --selection-text: #ff9e9e;
 }
 
 /* ===== RESET & BASE ===== */
@@ -124,7 +124,6 @@ a:hover { color: var(--accent-hover); }
 
 /* ===== BAT MODE OVERLAYS ===== */
 .bat-grain-overlay,
-.bat-rain-overlay,
 .bat-vignette {
   position: fixed;
   inset: 0;
@@ -140,47 +139,48 @@ a:hover { color: var(--accent-hover); }
   mix-blend-mode: overlay;
 }
 
-[data-theme="bat"] .bat-rain-overlay {
-  opacity: 0.18;
-  background: repeating-linear-gradient(
-    100deg,
-    transparent,
-    transparent 2px,
-    rgba(180,10,10,0.04) 2px,
-    rgba(180,10,10,0.04) 3px
-  );
-  background-size: 4px 80px;
-  animation: batRain 0.6s linear infinite;
-}
-
-@keyframes batRain {
-  0% { background-position: 0 0; }
-  100% { background-position: 2px 80px; }
-}
-
 [data-theme="bat"] .bat-vignette {
   opacity: 1;
-  background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.85) 100%);
+  background: radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.62) 100%);
 }
 
-/* Bat glow on h1 */
-[data-theme="bat"] .intro h1 {
-  text-shadow: 0 0 40px rgba(200,20,20,0.35), 0 0 80px rgba(200,20,20,0.1);
+@keyframes batTextFlash {
+  0%, 18%, 22%, 62%, 64%, 100% {
+    text-shadow: 0 0 8px rgba(255,80,80,0.9), 0 0 22px rgba(255,30,30,0.65), 0 0 48px rgba(255,0,0,0.3);
+  }
+  20%, 63% {
+    text-shadow: 0 0 3px rgba(255,80,80,0.6), 0 0 10px rgba(255,0,0,0.28);
+  }
 }
 
-[data-theme="bat"] .intro h2 {
-  text-shadow: 0 0 20px rgba(200,20,20,0.2);
+@keyframes batIconFlash {
+  0%, 18%, 22%, 62%, 64%, 100% {
+    filter: drop-shadow(0 0 6px rgba(255,80,80,0.95)) drop-shadow(0 0 16px rgba(255,20,20,0.65)) drop-shadow(0 0 32px rgba(255,0,0,0.32));
+  }
+  20%, 63% {
+    filter: drop-shadow(0 0 2px rgba(255,80,80,0.65)) drop-shadow(0 0 8px rgba(255,0,0,0.26));
+  }
 }
 
+[data-theme="bat"] .intro h1,
+[data-theme="bat"] .intro h2,
 [data-theme="bat"] .section-label {
-  text-shadow: 0 0 14px rgba(200,20,20,0.3);
+  animation: batTextFlash 2.8s linear infinite;
+}
+
+[data-theme="bat"] .social-links a {
+  color: #ff6a6a;
+}
+
+[data-theme="bat"] .social-links a svg {
+  animation: batIconFlash 2.8s linear infinite;
 }
 
 /* Bat mode nav lines glow */
 [data-theme="bat"] nav a:hover::before,
 [data-theme="bat"] nav a.active::before {
-  background: #e02020;
-  box-shadow: 0 0 10px rgba(200,20,20,0.5);
+  background: #ff5c5c;
+  box-shadow: 0 0 12px rgba(255,40,40,0.6);
 }
 
 /* Bat mode card hover glow */
@@ -373,92 +373,97 @@ nav a.active::before {
   transform: scale(1);
 }
 
-/* ===== DARK MODE TOGGLE SWITCH ===== */
-.theme-switch {
-  position: relative;
-  width: 52px;
-  height: 28px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.theme-switch input { display: none; }
-
-.theme-switch .switch-track {
-  position: absolute;
-  inset: 0;
+/* ===== THEME BUTTON (top-left, light/dark only) ===== */
+.theme-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--glass-border);
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 100px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--glass-shadow);
-}
-
-.theme-switch .switch-thumb {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 22px;
-  height: 22px;
   border-radius: 50%;
-  background: var(--text-primary);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
+  box-shadow: var(--glass-shadow);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--text-primary);
+  padding: 0;
 }
 
-.theme-switch .switch-thumb svg {
-  width: 12px;
-  height: 12px;
-  color: var(--bg);
-  transition: color 0.3s ease;
+.theme-btn:hover {
+  transform: scale(1.1);
 }
 
-.theme-switch input:checked ~ .switch-thumb {
-  left: 27px;
+.theme-btn svg {
+  width: 16px;
+  height: 16px;
 }
 
-.theme-switch .sun-icon { display: none; }
-.theme-switch .moon-icon { display: block; }
+.theme-btn .sun-icon { display: none; }
+.theme-btn .moon-icon { display: block; }
 
-[data-theme="dark"] .theme-switch .sun-icon { display: block; }
-[data-theme="dark"] .theme-switch .moon-icon { display: none; }
-[data-theme="bat"] .theme-switch .sun-icon { display: block; }
-[data-theme="bat"] .theme-switch .moon-icon { display: none; }
+[data-theme="dark"] .theme-btn .sun-icon { display: block; }
+[data-theme="dark"] .theme-btn .moon-icon { display: none; }
 
-/* Bat mode cursor spotlight */
-/* Bat mode cursor spotlight */
-#bat-spotlight {
+/* Hide theme button in bat mode */
+[data-theme="bat"] .theme-btn {
+  display: none;
+}
+
+/* ===== BAT AREA (bottom-left) ===== */
+.bat-area {
   position: fixed;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
+  bottom: 32px;
+  left: 32px;
+  z-index: 1000;
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transform: scale(0.9);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-[data-theme="bat"] #bat-spotlight {
+.bat-area.visible {
   opacity: 1;
+  transform: scale(1);
 }
 
-/* ===== BAT MODE TOGGLE — no circle, just the bat ===== */
+/* ===== BAT SHORTCUT HINT (bottom-left) ===== */
+.bat-shortcut-hint {
+  position: fixed;
+  left: 32px;
+  bottom: 24px;
+  z-index: 1000;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--text-tertiary);
+  opacity: 0.75;
+  user-select: none;
+  pointer-events: none;
+  transition: color 0.6s ease, opacity 0.3s ease;
+}
+
+/* ===== BAT MODE TOGGLE — only visible in bat mode ===== */
 .bat-toggle {
   width: 44px;
   height: 44px;
   border: none;
   background: transparent;
   cursor: pointer;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   padding: 0;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+}
+
+[data-theme="bat"] .bat-toggle {
+  display: flex;
+  opacity: 1;
+  pointer-events: none;
+  margin-left: -8px;
+  cursor: default;
 }
 
 .bat-toggle:hover {
@@ -469,32 +474,17 @@ nav a.active::before {
   width: 36px;
   height: auto;
   object-fit: contain;
-  opacity: 0.5;
-  transition: opacity 0.4s ease, filter 0.4s ease;
-}
-
-.bat-toggle:hover img {
-  opacity: 0.75;
+  transition: filter 0.4s ease;
 }
 
 /* When bat mode is active — glowing red bat symbol */
 [data-theme="bat"] .bat-toggle img {
   opacity: 1;
-  filter: drop-shadow(0 0 6px rgba(220,20,20,0.7)) drop-shadow(0 0 14px rgba(200,0,0,0.4)) drop-shadow(0 0 28px rgba(200,0,0,0.2));
+  animation: batIconFlash 2.8s linear infinite;
 }
 
 [data-theme="bat"] .bat-toggle:hover img {
-  filter: drop-shadow(0 0 8px rgba(220,20,20,0.9)) drop-shadow(0 0 20px rgba(200,0,0,0.5)) drop-shadow(0 0 40px rgba(200,0,0,0.25));
-}
-
-/* Pulse animation for active bat mode */
-@keyframes batPulse {
-  0%, 100% { filter: drop-shadow(0 0 6px rgba(220,20,20,0.7)) drop-shadow(0 0 14px rgba(200,0,0,0.4)) drop-shadow(0 0 28px rgba(200,0,0,0.2)); }
-  50% { filter: drop-shadow(0 0 10px rgba(220,20,20,0.9)) drop-shadow(0 0 20px rgba(200,0,0,0.55)) drop-shadow(0 0 36px rgba(200,0,0,0.3)); }
-}
-
-[data-theme="bat"] .bat-toggle img {
-  animation: batPulse 3s ease-in-out infinite;
+  animation: batIconFlash 2.8s linear infinite;
 }
 
 /* ===== RIGHT PANEL ===== */
@@ -879,6 +869,99 @@ section:last-child { margin-bottom: 48px; }
 .resume-link:hover .arrow,
 .projects-link:hover .arrow { transform: translate(4px, -2px); }
 
+/* ===== RESUME MODAL ===== */
+body.resume-open {
+  overflow: hidden;
+}
+
+.resume-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 11000;
+  display: grid;
+  place-items: center;
+  background: rgba(16, 16, 20, 0.22);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.resume-modal.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.resume-modal-card {
+  width: min(980px, calc(100vw - 44px));
+  height: min(88vh, 920px);
+  border-radius: 30px;
+  background: #f5f5f7;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+}
+
+.resume-modal-head {
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px 0 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.resume-modal-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #4a4a50;
+}
+
+.resume-modal-close {
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.06);
+  color: #1d1d1f;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.resume-modal-close:hover {
+  transform: scale(1.06);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.resume-modal-frame {
+  width: 100%;
+  height: calc(100% - 62px);
+  border: 0;
+  background: #ffffff;
+}
+
+.resume-error {
+  display: grid;
+  gap: 10px;
+  place-items: center;
+  align-content: center;
+  padding: 36px;
+  height: calc(100% - 62px);
+  color: #3a3a40;
+  text-align: center;
+  background: #f5f5f7;
+}
+
+.resume-error a {
+  color: #0071e3;
+  text-decoration: none;
+}
+
 /* ===== FOOTER ===== */
 .footer-text {
   font-size: 0.82rem;
@@ -920,6 +1003,9 @@ section:last-child { margin-bottom: 48px; }
   .card-image { width: 100px; height: 60px; }
   .card-date, .edu-date { min-width: auto; }
   .toggle-area { top: 24px; left: 24px; }
+  .bat-shortcut-hint { left: 24px; bottom: 20px; }
+  .resume-modal-card { width: calc(100vw - 22px); height: 92vh; border-radius: 22px; }
+  .resume-modal-head { padding: 0 14px 0 16px; }
 }
 
 @media (max-width: 480px) {
@@ -935,12 +1021,8 @@ section:last-child { margin-bottom: 48px; }
 </head>
 <body>
 
-<!-- BAT SPOTLIGHT (follows cursor) -->
-<div id="bat-spotlight"></div>
-
 <!-- BAT MODE OVERLAYS -->
 <div class="bat-grain-overlay"></div>
-<div class="bat-rain-overlay"></div>
 <div class="bat-vignette"></div>
 
 <!-- LOADER -->
@@ -950,22 +1032,19 @@ section:last-child { margin-bottom: 48px; }
 
 <!-- TOGGLES -->
 <div class="toggle-area" id="toggleArea">
-  <label class="theme-switch" id="themeToggle">
-    <input type="checkbox" id="themeCheck">
-    <div class="switch-track"></div>
-    <div class="switch-thumb">
-      <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
-      </svg>
-      <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/>
-      </svg>
-    </div>
-  </label>
-  <button class="bat-toggle" id="batToggle" aria-label="Toggle bat mode">
+  <button class="theme-btn" id="themeToggle" aria-label="Toggle light and dark mode">
+    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/>
+    </svg>
+    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/>
+    </svg>
+  </button>
+  <button class="bat-toggle" id="batToggle" aria-label="Bat mode logo">
     <img src="data:image/png;base64,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" alt="Bat mode" />
   </button>
 </div>
+<div class="bat-shortcut-hint">press ⌘ + B</div>
 
 <!-- MAIN CONTENT -->
 <div id="content">
@@ -976,7 +1055,7 @@ section:last-child { margin-bottom: 48px; }
         <div class="intro">
           <h1 class="fade-up">Tharak Bhupathi</h1>
           <h2 class="fade-up">Data Science & Analytics</h2>
-          <p class="fade-up">I build scalable data pipelines, craft insightful dashboards, and turn complex datasets into decisions.</p>
+          <p class="fade-up">I engineer scalable data pipelines, train machine learning models, and design analytics that drive intelligent business decisions</p>
         </div>
         <nav class="fade-up">
           <ul>
@@ -1007,10 +1086,10 @@ section:last-child { margin-bottom: 48px; }
       <section id="about">
         <h3 class="section-label">About</h3>
         <div class="about-text fade-up">
-          <p>I'm a data science graduate student at <a href="https://www.rit.edu/" target="_blank">Rochester Institute of Technology</a> with a background in computer science and a focus on building reliable, well-structured data systems. I'm drawn to the intersection of engineering and analytics — where clean pipelines meet meaningful insight.</p>
-          <p>Currently, I'm working as a <a href="https://www.rit.edu/" target="_blank">Data Quality Analyst at RIT</a>, where I validate and clean university-wide records for a major Oracle-to-Azure migration. I build dashboards in Power BI and Tableau to monitor data quality across 20+ datasets, and I assist ETL pipelines to ensure smooth downstream operations.</p>
-          <p>Previously, I worked as a <a href="#">Data Analyst Intern</a>, optimizing production and logistics reporting. I also served as a Graduate Teaching Assistant, helping students navigate Android development with Kotlin and Jetpack Compose.</p>
-          <p>When I'm not wrangling data, you'll find me exploring new tools, reading about ML systems, or finding the best biryani in Rochester.</p>
+          <p>I'm an M.S. Data Science student at <a href="https://www.rit.edu/" target="_blank">Rochester Institute of Technology</a> with a background in Computer Science. I am drawn to the entire data lifecycle, from architecting scalable data pipelines and deploying predictive machine learning models, to designing the analytics that drive intelligent business decisions.</p>
+          <p>Currently, I'm working as a <a href="https://www.rit.edu/" target="_blank">Data Quality Analyst at RIT</a>, where I validate and clean university-wide records for a major Oracle-to-Azure cloud migration. I support the underlying ETL pipelines and build specialized Power BI dashboards designed to diagnose pipeline failure types, categorize migration errors, and ensure smooth downstream operations.</p>
+          <p>Previously, I worked as a <a href="#">Data Analyst Intern</a> optimizing production and logistics reporting, and served as a Graduate Teaching Assistant helping students navigate Android development using Kotlin and Jetpack Compose.</p>
+          <p>When I'm not wrangling data or building AI systems, you'll find me exploring new open-source tools, reading about machine learning architectures, or hunting for the best biryani in Rochester.</p>
         </div>
       </section>
 
@@ -1061,7 +1140,7 @@ section:last-child { margin-bottom: 48px; }
           </div>
         </div>
 
-        <a class="resume-link fade-up" href="#" target="_blank">
+        <a class="resume-link fade-up" href="https://docs.google.com/document/d/1W_fXTA_V3fQROJyECbW1ULc1YjidQHIx/preview" id="resumeLink">
           View Full Resume <span class="arrow">↗</span>
         </a>
       </section>
@@ -1160,7 +1239,7 @@ section:last-child { margin-bottom: 48px; }
           </div>
         </div>
 
-        <a class="projects-link fade-up" href="#" target="_blank">
+        <a class="projects-link fade-up" href="https://github.com/tharakneo?tab=repositories" target="_blank" rel="noopener">
           View All Projects <span class="arrow">↗</span>
         </a>
       </section>
@@ -1270,6 +1349,27 @@ section:last-child { margin-bottom: 48px; }
   </div>
 </div>
 
+<!-- RESUME MODAL -->
+<div class="resume-modal" id="resumeModal" aria-hidden="true">
+  <div class="resume-modal-card" role="dialog" aria-modal="true" aria-labelledby="resumeModalTitle">
+    <div class="resume-modal-head">
+      <div class="resume-modal-title" id="resumeModalTitle">Resume</div>
+      <button class="resume-modal-close" id="resumeModalClose" aria-label="Close resume">&times;</button>
+    </div>
+    <iframe
+      class="resume-modal-frame"
+      id="resumeModalFrame"
+      src="about:blank"
+      title="Tharak Bhupathi Resume"
+      loading="lazy">
+    </iframe>
+    <div class="resume-error" id="resumeModalFallback" hidden>
+      <div>Resume preview is unavailable right now.</div>
+      <a id="resumeModalFallbackLink" href="https://docs.google.com/document/d/1W_fXTA_V3fQROJyECbW1ULc1YjidQHIx/preview" target="_blank" rel="noopener">Open resume</a>
+    </div>
+  </div>
+</div>
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ===== LOADER =====
 (function() {
@@ -1295,13 +1395,10 @@ section:last-child { margin-bottom: 48px; }
       setTimeout(() => {
         // Apply saved theme ONLY after loader is done
         const saved = localStorage.getItem('theme');
-        const themeCheck = document.getElementById('themeCheck');
         if (saved === 'dark') {
           document.documentElement.setAttribute('data-theme', 'dark');
-          themeCheck.checked = true;
         } else if (saved === 'bat') {
           document.documentElement.setAttribute('data-theme', 'bat');
-          themeCheck.checked = true;
         }
 
         loader.classList.add('hide');
@@ -1317,50 +1414,83 @@ section:last-child { margin-bottom: 48px; }
   requestAnimationFrame(animate);
 })();
 
-// ===== DARK MODE TOGGLE SWITCH =====
+// ===== DARK MODE TOGGLE BUTTON =====
 (function() {
-  const themeCheck = document.getElementById('themeCheck');
+  const themeToggle = document.getElementById('themeToggle');
   const html = document.documentElement;
 
-  themeCheck.addEventListener('change', () => {
+  themeToggle.addEventListener('click', () => {
     const current = html.getAttribute('data-theme');
     if (current === 'dark' || current === 'bat') {
       html.removeAttribute('data-theme');
       localStorage.setItem('theme', 'light');
-      themeCheck.checked = false;
     } else {
       html.setAttribute('data-theme', 'dark');
       localStorage.setItem('theme', 'dark');
-      themeCheck.checked = true;
     }
   });
 })();
 
-// ===== BAT MODE =====
+// ===== BAT MODE SHORTCUT (Command + B) =====
 (function() {
-  const batToggle = document.getElementById('batToggle');
   const html = document.documentElement;
-  const themeCheck = document.getElementById('themeCheck');
-
-  batToggle.addEventListener('click', () => {
-    const current = html.getAttribute('data-theme');
-    if (current === 'bat') {
-      html.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'light');
-      themeCheck.checked = false;
-    } else {
-      html.setAttribute('data-theme', 'bat');
-      localStorage.setItem('theme', 'bat');
-      themeCheck.checked = true;
+  document.addEventListener('keydown', (e) => {
+    if (e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey && e.key.toLowerCase() === 'b') {
+      e.preventDefault();
+      const current = html.getAttribute('data-theme');
+      if (current === 'bat') {
+        html.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.setAttribute('data-theme', 'bat');
+        localStorage.setItem('theme', 'bat');
+      }
     }
   });
 })();
 
-// ===== CURSOR SPOTLIGHT (bat mode only) =====
+// ===== RESUME MODAL =====
 (function() {
-  const spot = document.getElementById('bat-spotlight');
-  document.addEventListener('mousemove', (e) => {
-    spot.style.background = 'radial-gradient(800px circle at ' + e.clientX + 'px ' + e.clientY + 'px, rgba(200,170,110,0.12), rgba(180,140,80,0.05) 40%, transparent 70%)';
+  const resumeLink = document.getElementById('resumeLink');
+  const resumeModal = document.getElementById('resumeModal');
+  const resumeClose = document.getElementById('resumeModalClose');
+  const resumeFrame = document.getElementById('resumeModalFrame');
+  const resumeFallback = document.getElementById('resumeModalFallback');
+  const resumeFallbackLink = document.getElementById('resumeModalFallbackLink');
+
+  if (!resumeLink || !resumeModal || !resumeClose || !resumeFrame || !resumeFallback || !resumeFallbackLink) return;
+
+  function openResumeModal() {
+    const resumeUrl = resumeLink.getAttribute('href') || 'https://docs.google.com/document/d/1W_fXTA_V3fQROJyECbW1ULc1YjidQHIx/preview';
+    resumeFallbackLink.href = resumeUrl;
+    resumeFrame.src = resumeUrl;
+    resumeFrame.style.display = 'block';
+    resumeFallback.hidden = true;
+
+    resumeModal.classList.add('open');
+    resumeModal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('resume-open');
+  }
+
+  function closeResumeModal() {
+    resumeModal.classList.remove('open');
+    resumeModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('resume-open');
+  }
+
+  resumeLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    openResumeModal();
+  });
+
+  resumeClose.addEventListener('click', closeResumeModal);
+
+  resumeModal.addEventListener('click', (e) => {
+    if (e.target === resumeModal) closeResumeModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && resumeModal.classList.contains('open')) closeResumeModal();
   });
 })();
 

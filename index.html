@@ -201,7 +201,7 @@
       margin: 4px 6px 6px;
       padding: 7px 10px;
       border-radius: 8px;
-      color: var(--text-dim);
+      color: #BBBAAE;
       font-size: 13.5px;
       cursor: pointer;
       transition: background .15s;
@@ -236,7 +236,7 @@
       gap: 10px;
       padding: 7px 10px;
       border-radius: 8px;
-      color: var(--text-dim);
+      color: #BBBAAE;
       font-size: 13.5px;
       cursor: pointer;
       transition: background .15s;
@@ -246,7 +246,7 @@
       box-sizing: border-box;
     }
 
-    .sb-item:hover { background: #111110; color: #ffffff; }
+    .sb-item:hover { background: #1a1a18; color: #F8F8F6; }
 
     /* collapsed tooltip */
     .sb-item .sb-tooltip { display: none; }
@@ -271,7 +271,7 @@
 
     .sb-section-label {
       font-size: 12px;
-      color: var(--text-dim);
+      color: #BBBAAE;
       padding: 16px 16px 6px;
       letter-spacing: 0em;
       font-weight: 400;
@@ -283,26 +283,60 @@
       flex-direction: column;
       padding: 0 6px;
       gap: 0;
-      overflow-y: auto;
-      flex: 1;
       scrollbar-width: none;
     }
 
     .sb-recents::-webkit-scrollbar { display: none; }
 
     .sb-recent {
-      padding: 7px 10px;
+      padding: 6px 10px;
       border-radius: 6px;
       font-size: 13.5px;
-      color: #c8c8c5;
+      color: #BBBAAE;
       cursor: pointer;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       transition: background .15s, color .15s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+      position: relative;
     }
 
-    .sb-recent:hover { background: #111110; color: #ffffff; }
+    .sb-recent-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .sb-recent-dots {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .12s;
+      color: #BBBAAE;
+    }
+
+    .sb-recent:hover { background: #1a1a18; color: #F8F8F6; }
+    .sb-recent:hover .sb-recent-dots { opacity: 1; pointer-events: auto; }
+    .sb-recent:hover .sb-recent-label { color: #F8F8F6; }
+
+    .sb-recent.active {
+      background: #1a1a18;
+      color: #F8F8F6;
+    }
+    .sb-recent.active .sb-recent-label { color: #F8F8F6; }
+    .sb-recent.active .sb-recent-dots { opacity: 1; pointer-events: auto; }
 
     .sb-footer {
       padding: 10px 10px 12px;
@@ -398,7 +432,7 @@
       display: none;
       align-items: center;
       justify-content: center;
-      color: var(--text-dim);
+      color: #BBBAAE;
       cursor: pointer;
       flex-shrink: 0;
       margin-right: 6px;
@@ -434,7 +468,7 @@
     .topbar-chevron {
       width: 14px;
       height: 14px;
-      color: var(--text-dim);
+      color: #BBBAAE;
     }
 
     .topbar-spacer {
@@ -516,7 +550,7 @@
 
     .c-subtitle {
       font-size: 13px;
-      color: var(--text-dim);
+      color: #BBBAAE;
       margin-bottom: 16px;
       font-family: "Inter", system-ui, sans-serif;
       display: flex;
@@ -563,7 +597,7 @@
 
     .exp-date {
       font-style: italic;
-      color: var(--text-dim);
+      color: #BBBAAE;
       margin-bottom: 16px;
       font-size: 15px;
     }
@@ -610,7 +644,7 @@
 
       font-size: 11px;
       font-family: "Inter", system-ui, sans-serif;
-      color: var(--text-dim);
+      color: #BBBAAE;
       background: transparent;
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 9999px;
@@ -967,7 +1001,7 @@
     .pdf-badge {
       font-size: 10px;
       font-weight: 500;
-      color: var(--text-dim);
+      color: #BBBAAE;
       background: rgba(255,255,255,0.07);
       border-radius: 4px;
       padding: 1px 5px;
@@ -987,7 +1021,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-dim);
+      color: #BBBAAE;
       cursor: pointer;
       transition: background .15s, color .15s;
     }
@@ -1069,7 +1103,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--text-dim);
+      color: #BBBAAE;
       flex-shrink: 0;
     }
 
@@ -1089,7 +1123,7 @@
 
     .resume-type {
       font-size: 13px;
-      color: var(--text-dim);
+      color: #BBBAAE;
     }
 
     .resume-card-right {
@@ -1124,7 +1158,7 @@
       align-items: center;
       font-size: 13px;
       font-weight: 400;
-      color: var(--text-dim);
+      color: #BBBAAE;
       white-space: nowrap;
       text-decoration: none;
       transition: background .15s, color .15s;
@@ -1300,18 +1334,26 @@
       <!-- Recents -->
       <div class="sb-section-label">Recents</div>
       <div class="sb-recents">
-        <div class="sb-recent">is it normal to apply to 200 jobs</div>
-        <div class="sb-recent">why does every job need 5 years exp for entry level</div>
-        <div class="sb-recent">how many times can I say "passionate about data"</div>
-        <div class="sb-recent">are recruiters going to find this funny or unhinged</div>
-        <div class="sb-recent">why is my model 99% accurate and also wrong</div>
-        <div class="sb-recent">best ramen near Rochester</div>
-        <div class="sb-recent">best way to fold a fitted sheet</div>
-        <div class="sb-recent">how many coffees is too many before a demo</div>
-        <div class="sb-recent">explain transformers to my non-technical parents</div>
-        <div class="sb-recent">how to politely ghost a recruiter who ghosted first</div>
-        <div class="sb-recent">is it weird to talk to your perfumes</div>
+        <div class="sb-recent active">
+          <span class="sb-recent-label">Tharak Bhupathi Portfolio</span>
+          <span class="sb-recent-dots">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg>
+          </span>
+        </div>
+        <div class="sb-recent"><span class="sb-recent-label">is it normal to apply to 200 jobs</span><span class="sb-recent-dots"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></span></div>
+        <div class="sb-recent"><span class="sb-recent-label">why does every job need 5 years exp for entry level</span><span class="sb-recent-dots"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></span></div>
+        <div class="sb-recent"><span class="sb-recent-label">how many times can I say "passionate about data"</span><span class="sb-recent-dots"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></span></div>
+        <div class="sb-recent"><span class="sb-recent-label">are recruiters going to find this funny or unhinged</span><span class="sb-recent-dots"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></span></div>
+        <div class="sb-recent"><span class="sb-recent-label">why is my model 99% accurate and also wrong</span><span class="sb-recent-dots"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></span></div>
+        <div class="sb-recent"><span class="sb-recent-label">best ramen near Rochester</span><span class="sb-recent-dots"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></span></div>
+        <div class="sb-recent"><span class="sb-recent-label">best way to fold a fitted sheet</span><span class="sb-recent-dots"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></span></div>
+        <div class="sb-recent"><span class="sb-recent-label">how many coffees is too many before a demo</span><span class="sb-recent-dots"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></span></div>
+        <div class="sb-recent"><span class="sb-recent-label">explain transformers to my non-technical parents</span><span class="sb-recent-dots"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></span></div>
+        <div class="sb-recent"><span class="sb-recent-label">convince me mornings are good actually</span><span class="sb-recent-dots"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></span></div>
+        <div class="sb-recent"><span class="sb-recent-label">is it weird to talk to your perfumes</span><span class="sb-recent-dots"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></span></div>
       </div>
+
+      </div><!-- /sb-scroll -->
 
       <!-- Footer -->
       <div class="sb-footer">
@@ -1332,8 +1374,6 @@
           </div>
         </div>
       </div>
-
-      </div><!-- /sb-scroll -->
     </aside>
 
     <!-- Main -->

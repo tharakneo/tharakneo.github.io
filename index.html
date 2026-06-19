@@ -9,6 +9,7 @@
   <meta property="og:title" content="Tharak Portfolio">
   <meta property="og:description" content="Tharak Bhupathi — Data Science & AI">
   <meta property="og:url" content="https://tharakneo.github.io">
+  <meta property="og:type" content="website">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='hsl(14.8%2C63.1%25%2C59.6%25)' d='m19.6 66.5 19.7-11 .3-1-.3-.5h-1l-3.3-.2-11.2-.3L14 53l-9.5-.5-2.4-.5L0 49l.2-1.5 2-1.3 2.9.2 6.3.5 9.5.6 6.9.4L38 49.1h1.6l.2-.7-.5-.4-.4-.4L29 41l-10.6-7-5.6-4.1-3-2-1.5-2-.6-4.2 2.7-3 3.7.3.9.2 3.7 2.9 8 6.1L37 36l1.5 1.2.6-.4.1-.3-.7-1.1L33 25l-6-10.4-2.7-4.3-.7-2.6c-.3-1-.4-2-.4-3l3-4.2L28 0l4.2.6L33.8 2l2.6 6 4.1 9.3L47 29.9l2 3.8 1 3.4.3 1h.7v-.5l.5-7.2 1-8.7 1-11.2.3-3.2 1.6-3.8 3-2L61 2.6l2 2.9-.3 1.8-1.1 7.7L59 27.1l-1.5 8.2h.9l1-1.1 4.1-5.4 6.9-8.6 3-3.5L77 13l2.3-1.8h4.3l3.1 4.7-1.4 4.9-4.4 5.6-3.7 4.7-5.3 7.1-3.2 5.7.3.4h.7l12-2.6 6.4-1.1 7.6-1.3 3.5 1.6.4 1.6-1.4 3.4-8.2 2-9.6 2-14.3 3.3-.2.1.2.3 6.4.6 2.8.2h6.8l12.6 1 3.3 2 1.9 2.7-.3 2-5.1 2.6-6.8-1.6-16-3.8-5.4-1.3h-.8v.4l4.6 4.5 8.3 7.5L89 80.1l.5 2.4-1.3 2-1.4-.2-9.2-7-3.6-3-8-6.8h-.5v.7l1.8 2.7 9.8 14.7.5 4.5-.7 1.4-2.6 1-2.7-.6-5.8-8-6-9-4.7-8.2-.5.4-2.9 30.2-1.3 1.5-3 1.2-2.5-2-1.4-3 1.4-6.2 1.6-8 1.3-6.4 1.2-7.9.7-2.6v-.2H49L43 72l-9 12.3-7.2 7.6-1.7.7-3-1.5.3-2.8L24 86l10-12.8 6-7.9 4-4.6-.1-.5h-.3L17.2 77.4l-4.7.6-2-2 .2-3 1-1 8-5.5Z'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -67,8 +68,20 @@
       transition: width .2s cubic-bezier(.4,0,.2,1);
     }
 
+    /* sidebar inner scroll so footer is always visible */
+    .sb-scroll {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      scrollbar-width: none;
+    }
+    .sb-scroll::-webkit-scrollbar { display: none; }
+
     .sidebar.collapsed {
       width: 48px;
+      overflow: visible;
     }
 
     /* collapsed: hide text, keep icons */
@@ -233,6 +246,26 @@
     }
 
     .sb-item:hover { background: #111110; color: #ffffff; }
+
+    /* collapsed tooltip */
+    .sb-item .sb-tooltip { display: none; }
+
+    #sb-floating-tooltip {
+      position: fixed;
+      background: #2a2a28;
+      color: #f8f8f6;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      padding: 5px 10px;
+      border-radius: 6px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .12s ease;
+      z-index: 9999;
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    #sb-floating-tooltip.show { opacity: 1; }
     .sb-item svg { width: 18px; height: 18px; flex-shrink: 0; stroke: #ffffff; }
 
     .sb-section-label {
@@ -361,7 +394,7 @@
     .topbar-hamburger {
       width: 28px;
       height: 28px;
-      display: flex;
+      display: none;
       align-items: center;
       justify-content: center;
       color: var(--text-dim);
@@ -1096,11 +1129,50 @@
     .cp { color: #e6edf3; }   /* { } — near white */
     .cb { color: #e6edf3; }   /* [ ] — near white */
     .cs { color: #7ee787; }   /* strings — green */
+
+    /* ─── Mobile ─── */
+    .sb-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.5);
+      z-index: 49;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        left: 0;
+        top: 0;
+        height: 100vh;
+        z-index: 50;
+        width: 260px !important;
+        transform: translateX(-100%);
+        transition: transform .25s cubic-bezier(.4,0,.2,1);
+        overflow-y: auto;
+      }
+
+      .sidebar.mobile-open {
+        transform: translateX(0);
+      }
+
+      .sb-overlay.visible {
+        display: block;
+      }
+
+      .topbar-hamburger {
+        display: flex !important;
+      }
+    }
   </style>
 </head>
 
 <body>
+<div id="sb-floating-tooltip"></div>
   <div class="app">
+
+    <!-- Mobile overlay -->
+    <div class="sb-overlay" id="sb-overlay" onclick="closeMobileSidebar()"></div>
 
     <!-- Sidebar -->
     <aside class="sidebar collapsed" id="sidebar">
@@ -1112,6 +1184,9 @@
           <div class="sb-icon-btn sb-panel-btn" onclick="toggleSidebar()" title="Toggle sidebar"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg></div>
         </div>
       </div>
+
+      <!-- Scrollable content -->
+      <div class="sb-scroll">
 
       <!-- New chat -->
       <div class="sb-new-chat">
@@ -1126,22 +1201,27 @@
         <div class="sb-item" onclick="scrollToSection('about', this)">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
           <span class="sb-item-text">About Me</span>
+          <span class="sb-tooltip">About Me</span>
         </div>
         <div class="sb-item" onclick="scrollToSection('work', this)">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
           <span class="sb-item-text">Work Experience</span>
+          <span class="sb-tooltip">Work Experience</span>
         </div>
         <div class="sb-item" onclick="scrollToSection('projects', this)">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           <span class="sb-item-text">Projects</span>
+          <span class="sb-tooltip">Projects</span>
         </div>
         <div class="sb-item" onclick="scrollToSection('skills', this)">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>
           <span class="sb-item-text">Skills</span>
+          <span class="sb-tooltip">Skills</span>
         </div>
         <div class="sb-item" onclick="openResume(event)">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
           <span class="sb-item-text">Resume</span>
+          <span class="sb-tooltip">Resume</span>
         </div>
 
       </div>
@@ -1152,10 +1232,12 @@
         <a class="sb-item" href="https://linkedin.com/in/tharakbhupathi" target="_blank">
           <svg viewBox="0 0 72 72" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><rect width="72" height="72" rx="8" fill="#0A66C2"/><path d="M13.139 27.848h9.895V58.14h-9.895zm4.948-15.71a5.73 5.73 0 1 1 0 11.46 5.73 5.73 0 0 1 0-11.46M28.532 27.848H38.03v4.147h.137c1.336-2.524 4.604-5.19 9.479-5.19 10.148 0 12.02 6.676 12.02 15.353V58.14H49.77V44.026c0-3.367-.066-7.699-4.687-7.699-4.695 0-5.413 3.668-5.413 7.454V58.14H29.775V27.848z" fill="#ffffff"/></svg>
           <span class="sb-item-text">LinkedIn</span>
+          <span class="sb-tooltip">LinkedIn</span>
         </a>
         <a class="sb-item" href="https://github.com/tharakneo" target="_blank">
           <svg viewBox="0 0 98 96" width="18" height="18" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="#ffffff"/></svg>
           <span class="sb-item-text">GitHub</span>
+          <span class="sb-tooltip">GitHub</span>
         </a>
       </div>
 
@@ -1174,6 +1256,8 @@
         <div class="sb-recent">how to politely ghost a recruiter who ghosted first</div>
         <div class="sb-recent">is it weird to talk to your perfumes</div>
       </div>
+
+      </div><!-- /sb-scroll -->
 
       <!-- Footer -->
       <div class="sb-footer">
@@ -1201,6 +1285,9 @@
 
       <!-- Topbar -->
       <div class="topbar">
+        <button class="topbar-hamburger" onclick="openMobileSidebar()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/></svg>
+        </button>
         <span class="topbar-title">Tharak Bhupathi Portfolio</span>
         <svg class="topbar-chevron" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
@@ -1597,7 +1684,7 @@
                       <path d="M73.4 26.5l-7.2-12.45c-.8-1.4-1.95-2.5-3.3-3.3L49.2 32l10.6 21H87.2c0-1.55-.4-3.1-1.2-4.5l-12.6-22z" fill="#ffba00"/>
                     </svg>
                   </div>
-                  <a class="resume-download" href="#" onclick="event.stopPropagation(); downloadResume()">Download</a>
+                  <a class="resume-download" href="javascript:void(0)" onclick="event.stopPropagation(); downloadResume()">Download</a>
                 </div>
               </div>
 
@@ -1627,7 +1714,7 @@
       <div class="input-wrap">
         <div class="input-box" id="input-box">
           <!-- Step 2: name + email fields, hidden until first send -->
-          <div id="contact-fields" style="display:none; padding: 10px 18px 0; display:none;">
+          <div id="contact-fields" style="display:none; padding: 10px 18px 0;">
             <div style="display:flex; gap:10px; margin-bottom:8px;">
               <input id="contact-name" type="text" placeholder="Your name" style="flex:1; background:transparent; border:none; border-bottom:1px solid rgba(255,255,255,.15); outline:none; color:#F8F8F6; font-size:14px; font-family:Inter,sans-serif; padding:6px 2px; color:#F8F8F6;" />
               <input id="contact-email" type="email" placeholder="Your email" style="flex:1; background:transparent; border:none; border-bottom:1px solid rgba(255,255,255,.15); outline:none; color:#F8F8F6; font-size:14px; font-family:Inter,sans-serif; padding:6px 2px;" />
@@ -1711,6 +1798,7 @@
       const target = document.getElementById(id);
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
+      closeMobileSidebar();
     }
 
     function sharePortfolio() {
@@ -1756,6 +1844,16 @@
       document.getElementById('sidebar').addEventListener('transitionend', positionBtn);
       positionBtn();
     })();
+
+    function openMobileSidebar() {
+      document.getElementById('sidebar').classList.add('mobile-open');
+      document.getElementById('sb-overlay').classList.add('visible');
+    }
+
+    function closeMobileSidebar() {
+      document.getElementById('sidebar').classList.remove('mobile-open');
+      document.getElementById('sb-overlay').classList.remove('visible');
+    }
 
     function toggleSidebar() {
       document.getElementById('sidebar').classList.toggle('collapsed');
@@ -1836,6 +1934,26 @@
     document.getElementById('msg').addEventListener('keydown', function(e) {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); }
     });
+    // collapsed sidebar tooltips
+    (function() {
+      const tip = document.getElementById('sb-floating-tooltip');
+      document.querySelectorAll('.sb-item').forEach(item => {
+        const label = item.querySelector('.sb-tooltip');
+        if (!label) return;
+        item.addEventListener('mouseenter', () => {
+          if (!document.getElementById('sidebar').classList.contains('collapsed')) return;
+          tip.textContent = label.textContent;
+          const r = item.getBoundingClientRect();
+          tip.style.top = (r.top + r.height / 2) + 'px';
+          tip.style.left = (r.right + 10) + 'px';
+          tip.style.transform = 'translateY(-50%)';
+          tip.classList.add('show');
+        });
+        item.addEventListener('mouseleave', () => {
+          tip.classList.remove('show');
+        });
+      });
+    })();
   </script>
 
 </body>

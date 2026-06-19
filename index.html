@@ -1933,13 +1933,13 @@
         btn.classList.toggle('visible', distFromBottom > 120);
       }
 
+      chat.style.paddingBottom = '20px';
       chat.addEventListener('scroll', checkScroll);
       window.addEventListener('resize', positionBtn);
       window.addEventListener('load', () => {
         positionBtn();
         checkScroll();
       });
-      // also reposition when sidebar toggles
       document.getElementById('sidebar').addEventListener('transitionend', positionBtn);
       positionBtn();
     })();

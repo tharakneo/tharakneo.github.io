@@ -946,7 +946,7 @@
     .foot-note {
       text-align: center;
       font-size: 11.5px;
-      color: var(--text-muted);
+      color: #BBBAAE;
       padding-top: 6px;
       max-width: 750px;
       margin: 0 auto;
@@ -1969,6 +1969,23 @@
     // nothing needed — CSS handles mobile sidebar visibility
 
     let _sendStep = 0;
+
+    function collapseContactForm() {
+      const contactFields = document.getElementById('contact-fields');
+      const footNote = document.getElementById('foot-note');
+      if (_sendStep === 1) {
+        contactFields.style.display = 'none';
+        footNote.textContent = 'Claude can make mistakes. Consider checking important information.';
+        _sendStep = 0;
+      }
+    }
+
+    document.addEventListener('click', function(e) {
+      const inputWrap = document.querySelector('.input-wrap');
+      if (_sendStep === 1 && !inputWrap.contains(e.target)) {
+        collapseContactForm();
+      }
+    });
 
     async function handleSend() {
       const msg = document.getElementById('msg').value.trim();
